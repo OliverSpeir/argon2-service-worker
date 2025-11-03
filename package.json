@@ -1,0 +1,15 @@
+{
+  "name": "argon2-service",
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.17.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "workerd"
+    ]
+  },
+  "devDependencies": {
+    "wrangler": "^4.45.3"
+  }
+}

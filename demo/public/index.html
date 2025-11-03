@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argon2 Service Demo</title>
+  </head>
+  <body>
+    <div>
+      <h1>Argon2 Service Demo</h1>
+
+      <form id="authForm">
+        <div>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit" data-action="create">Create User</button>
+        <button type="submit" data-action="verify">Verify Password</button>
+      </form>
+
+      <div id="result"></div>
+    </div>
+
+    <script>
+      const form = document.getElementById("authForm");
+      const resultDiv = document.getElementById("result");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const action = e.submitter.dataset.action;
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const buttons = form.querySelectorAll("button");
+        buttons.forEach(btn => btn.disabled = true);
+
+        try {
+          const response = await fetch(`/${action}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+          });
+
+
+          let message = "";
+          if (action === "create") {
+            if (response.status === 200) {
+              message = `"${username}" created successfully`;
+            } else if (response.status === 409) {
+              message = `Failed: Username already exists`;
+            } else if (response.status === 400) {
+              message = `Failed: Invalid input`;
+            } else {
+              message = `Failed: status ${response.status})`;
+            }
+          } else {
+            if (response.status === 200) {
+              message = `verification success for "${username}"`;
+            } else if (response.status === 401) {
+              message = `verification failed: Invalid credentials`;
+            } else if (response.status === 400) {
+              message = `verification failed: Invalid input`;
+            } else {
+              message = `verification failed: status ${response.status})`;
+            }
+          }
+
+          resultDiv.innerHTML = message;
+        } catch (error) {
+          resultDiv.innerHTML = `Error: ${error.message}`;
+        } finally {
+          buttons.forEach(btn => btn.disabled = false);
+        }
+      });
+    </script>
+  </body>
+</html>

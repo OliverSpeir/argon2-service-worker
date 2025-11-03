@@ -1,0 +1,17 @@
+{
+  "name": "argon2-demo",
+  "main": "dist/index.js",
+  "compatibility_date": "2025-11-01",
+  "build": {
+    "command": "tsc"
+  },
+  "assets": {
+    "directory": "./public"
+  },
+  "services": [
+    {
+      "binding": "HASHING",
+      "service": "argon2-service"
+    }
+  ]
+}
