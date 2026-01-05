@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "scripts": {
+    "check": "tsc"
+  },
+  "dependencies": {
+    "hono": "^4"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "wrangler": "^4"
+  }
+}

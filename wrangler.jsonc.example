@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "argon2-service",
+  "main": "build/worker/shim.mjs",
+  "compatibility_date": "2025-10-31",
+  "routes": [],
+  "build": {
+    "command": "cargo install -q worker-build && worker-build --release",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "...",
+      "database_id": "...",
+      "migrations_dir": "db/migrations/",
+    },
+  ],
+}
